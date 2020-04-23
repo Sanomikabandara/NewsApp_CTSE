@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'WelcomPage.dart';
 import 'ListPage.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -9,6 +10,7 @@ class HomePage extends StatelessWidget {
     return new Scaffold(
       //backgroundColor: Colors.red,
       body: new Container(
+        child: imageCarasoul(),
         //Adding picture code goes here
       ),
       bottomNavigationBar: new BottomAppBar(
@@ -34,7 +36,7 @@ class HomePage extends StatelessWidget {
               ),
 
               new IconButton(
-                icon: new Icon(Icons.add_a_photo),
+                icon: new Icon(Icons.add),
                 iconSize: 40.0,
                 color: Colors.white70,
                 onPressed: () {
@@ -46,7 +48,7 @@ class HomePage extends StatelessWidget {
               ),
 
               new IconButton(
-                icon: new Icon(Icons.list),
+                icon: new Icon(Icons.call_split),
                 iconSize: 35.0,
                 color: Colors.white70,
                 onPressed: () {
@@ -59,6 +61,19 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget imageCarasoul(){
+    return Container(
+      height: 250.0,
+      child: Carousel(
+        boxFit: BoxFit.cover,
+        images: [
+          AssetImage('images/news_red.jpg'),
+          AssetImage('images/news_blue.jpg')
+        ],
       ),
     );
   }

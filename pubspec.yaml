@@ -57,6 +57,8 @@ flutter:
     - images/3.jpg
     - images/4.jpg
     - images/ttt.jpg
+    - images/news_blue.jpg
+    - images/news_red.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
