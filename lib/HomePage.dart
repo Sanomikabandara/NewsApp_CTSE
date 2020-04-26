@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'WelcomPage.dart';
 import 'ListPage.dart';
+import 'AddNews.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 class HomePage extends StatelessWidget {
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomePage()),
+                    MaterialPageRoute(builder: (context) => AddNews()),
                   );
                 },
               ),
@@ -78,4 +79,5 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 
