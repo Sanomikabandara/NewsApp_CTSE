@@ -25,6 +25,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_staggered_grid_view:
   carousel_pro:
+  form_bloc: ^0.5.1
+  flutter_form_bloc: ^0.4.2
+  flutter_bloc: ^0.21.0
+  image_picker: ^0.5.3+1
+  firebase_core: ^0.4.0+9
+  firebase_auth: ^0.14.0+5
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +65,8 @@ flutter:
     - images/ttt.jpg
     - images/news_blue.jpg
     - images/news_red.jpg
+    - images/bg_add_news.jpg
+    - images/backgoundform.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

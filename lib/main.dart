@@ -8,7 +8,7 @@ class NewsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        //primaryColor: Colors.blue,
+        primaryColor: Colors.deepOrange,
       ),
       home: WelcomePage(),
     );

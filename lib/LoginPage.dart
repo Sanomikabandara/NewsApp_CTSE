@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'HomePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,12 +9,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 35),
+          padding: EdgeInsets.symmetric(horizontal: 60),
           height: MediaQuery
               .of(context)
               .size
@@ -59,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: passwordController,
           autocorrect: true,
           decoration: InputDecoration(
             hintText: 'Password',
@@ -78,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: emailController,
           autocorrect: true,
           decoration: InputDecoration(
             hintText: 'Email',
@@ -126,9 +133,7 @@ class _LoginPageState extends State<LoginPage> {
       height: 50.0,
       child: RaisedButton(
         onPressed: () {
-          Navigator.push(context, new MaterialPageRoute(
-              builder: (context) => HomePage()
-          ));
+          login();
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
@@ -164,5 +169,22 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+Future<bool> login() async  {
+    try {
+      AuthResult newUser = await FirebaseAuth.instance
+          .signInWithEmailAndPassword
+        (email: emailController.text.trim(), password: passwordController.text.trim());
+      Navigator.push(context, new MaterialPageRoute(
+          builder: (context) => HomePage()
+      ));
+    }catch(e){
+      SnackBar snackBar = new SnackBar(
+          content: new Text("Your email or password is incorrect! Please try again!"),
+      backgroundColor: Colors.deepOrange);
+
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+      print(e.message);
+    }
+}
 
 }
