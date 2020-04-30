@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'HomePage.dart';
+import 'LoginPage.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
+class _SignupPageState extends State<SignupPage> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey2 = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey2,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 35),
+          padding: EdgeInsets.symmetric(horizontal: 60),
           height: MediaQuery
               .of(context)
               .size
@@ -54,6 +65,7 @@ class SignupPage extends StatelessWidget {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: passwordController,
           autocorrect: true,
           decoration: InputDecoration(
             hintText: 'Password',
@@ -73,6 +85,7 @@ class SignupPage extends StatelessWidget {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: emailController,
           autocorrect: true,
           decoration: InputDecoration(
             hintText: 'Email',
@@ -112,7 +125,9 @@ class SignupPage extends StatelessWidget {
     return Container(
       height: 50.0,
       child: RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          signUP();
+        },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
         child: Ink(
@@ -147,5 +162,38 @@ class SignupPage extends StatelessWidget {
       ),
     );
   }
+  Future<bool> signUP() async {
+    try {
+      if (emailController.text.trim().isEmpty) {
+        SnackBar snackBar = new SnackBar(
+            content: new Text("Your email is empty,Enter your email!"),
+            backgroundColor: Colors.deepOrange);
+        _scaffoldKey2.currentState.showSnackBar(snackBar);
+      } else if (passwordController.text.trim().isEmpty) {
+        SnackBar snackBar = new SnackBar(
+            content: new Text("Your password is empty,Enter your password"),
+            backgroundColor: Colors.deepOrange);
+        _scaffoldKey2.currentState.showSnackBar(snackBar);
+      } else {
+        AuthResult newUser = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
+        SnackBar snackBar = new SnackBar(
+            content: new Text("Your have successfully signed up!Please login to continue!"),
+            backgroundColor: Colors.deepOrange);
+        _scaffoldKey2.currentState.showSnackBar(snackBar);
+        Navigator.push(
+            context, new MaterialPageRoute(builder: (context) => LoginPage()));
+      }
+    } catch (e) {
+      SnackBar snackBar = new SnackBar(
+          content: new Text(
+              "Something went wrong!Please try again later!"),
+          backgroundColor: Colors.deepOrange);
 
+      _scaffoldKey2.currentState.showSnackBar(snackBar);
+      print(e.message);
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:newsapplication/FireStoreService.dart';
 import 'dart:ui';
+import 'News.dart';
 import 'WelcomPage.dart';
 import 'ListPage.dart';
 import 'AddNews.dart';
@@ -11,8 +13,50 @@ class HomePage extends StatelessWidget {
     return new Scaffold(
       //backgroundColor: Colors.red,
       body: new Container(
-        child: imageCarasoul(),
-        //Adding picture code goes here
+        child: new Container(
+           child: StreamBuilder(
+              stream: FireStoreService().getNews(),
+              builder:(BuildContext context,AsyncSnapshot<List<News>> snapshot){
+                if(snapshot.hasError || !snapshot.hasData){
+                  return CircularProgressIndicator();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context,int index){
+                    News news =snapshot.data[index];
+                    return Container(
+                      height:300,
+                      child: Card(
+                        shadowColor: Colors.brown,
+                        child:Wrap(
+                          children: [
+                            Image(
+                              image: AssetImage(news.newsImagePath),
+                              width: 150,
+                              height: 80,
+                            ),
+                             ListTile(
+                              title: Text(news.newsTitle),
+                              subtitle: Text(news.newsDescription),
+                            ),
+                          ],
+                        )
+                      ),
+                    );
+                    return Card(
+                      shadowColor: Colors.brown,
+                      child: ListTile(
+                        leading: Image(
+                          image: AssetImage(news.newsImagePath),
+                        ),
+                        title: Text(news.newsTitle),
+                        subtitle: Text(news.newsDescription),
+                      ),
+                    );
+                    });
+              },
+            )
+        )
       ),
       bottomNavigationBar: new BottomAppBar(
         color: Color(0xfff4d2800),
