@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newsapplication/FireStoreService.dart';
 import 'dart:ui';
@@ -11,7 +12,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      //backgroundColor: Colors.red,
+      appBar: AppBar(
+        title: Text("CAPPIC NEWS"),
+        backgroundColor: Colors.brown,
+        leading: new Container(),
+        centerTitle: true,
+      ),
+      backgroundColor: Color(0xfff4d2800),
       body: new Container(
         child: new Container(
            child: StreamBuilder(
@@ -32,11 +39,14 @@ class HomePage extends StatelessWidget {
                           children: [
                             Image(
                               image: AssetImage(news.newsImagePath),
-                              width: 150,
-                              height: 80,
+                              width: 800,
+                              height: 200,
                             ),
                              ListTile(
-                              title: Text(news.newsTitle),
+                              title: Text(news.newsTitle,
+                                textAlign: TextAlign.center,
+                                style: new TextStyle(fontWeight: FontWeight.bold,)
+                              ),
                               subtitle: Text(news.newsDescription),
                             ),
                           ],
