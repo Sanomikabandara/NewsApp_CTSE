@@ -12,4 +12,12 @@ class News{
       newsDescription=data["description"],
       newsImagePath=data["image_path"],
       id=id;
+
+  Map<String, dynamic> toMap() {
+    return{
+      "title" : newsTitle,
+      "description":newsDescription,
+      "image_path":newsImagePath
+    };
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:newsapplication/News.dart';
+
+import 'News.dart';
 
 class FireStoreService {
   static final FireStoreService _fireStoreService =
@@ -18,5 +19,9 @@ class FireStoreService {
           (doc) => News.fromMap(doc.data, doc.documentID),
         )
         .toList());
+  }
+
+  Future<void> addNews(News news){
+      return _db.collection('news').add(news.toMap());
   }
 }

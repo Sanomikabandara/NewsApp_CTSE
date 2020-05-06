@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newsapplication/FireStoreService.dart';
+import 'package:newsapplication/NewsDetails.dart';
 import 'dart:ui';
 import 'News.dart';
 import 'WelcomPage.dart';
@@ -14,11 +15,11 @@ class HomePage extends StatelessWidget {
     return new Scaffold(
       appBar: AppBar(
         title: Text("CAPPIC NEWS"),
-        backgroundColor: Colors.brown,
+        backgroundColor: Color(0xfff4d2800),
         leading: new Container(),
         centerTitle: true,
       ),
-      backgroundColor: Color(0xfff4d2800),
+      backgroundColor: Colors.brown,
       body: new Container(
         child: new Container(
            child: StreamBuilder(
@@ -33,21 +34,32 @@ class HomePage extends StatelessWidget {
                     News news =snapshot.data[index];
                     return Container(
                       height:300,
+                      padding:EdgeInsets.all(6.0),
                       child: Card(
                         shadowColor: Colors.brown,
+                        color: Colors.black,
                         child:Wrap(
                           children: [
                             Image(
                               image: AssetImage(news.newsImagePath),
-                              width: 800,
+                              width:double.infinity,
                               height: 200,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topCenter,
                             ),
                              ListTile(
                               title: Text(news.newsTitle,
                                 textAlign: TextAlign.center,
-                                style: new TextStyle(fontWeight: FontWeight.bold,)
+                                style: new TextStyle(fontWeight: FontWeight.bold,color: Colors.white)
                               ),
-                              subtitle: Text(news.newsDescription),
+                              subtitle: Text(news.newsDescription,
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(fontWeight: FontWeight.bold,color: Colors.white)
+                             ),
+                               onTap: ()=>Navigator.push(context, MaterialPageRoute(
+                                 builder: (_)=>NewsDetails(news:news),
+                               )
+                               ),
                             ),
                           ],
                         )

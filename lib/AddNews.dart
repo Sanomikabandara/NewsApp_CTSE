@@ -1,7 +1,10 @@
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:newsapplication/FireStoreService.dart';
+import 'package:newsapplication/News.dart';
 import 'package:path/path.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddNews extends StatelessWidget {
   static const String _title = 'ADD NEW NEWS';
@@ -34,7 +37,7 @@ class NewsForm extends StatefulWidget {
 
 class _NewsFormWidgetState extends State<NewsForm> {
   File _image;
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<ScaffoldState>();
 
   Future selectImageFromGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -45,9 +48,15 @@ class _NewsFormWidgetState extends State<NewsForm> {
     });
   }
 
+  TextEditingController titleCtrl = new TextEditingController();
+  TextEditingController descriptionCtrl = new TextEditingController();
+  TextEditingController imagepathCtrl = new TextEditingController();
+  TextEditingController userIdCtrl = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 60),
@@ -97,6 +106,7 @@ class _NewsFormWidgetState extends State<NewsForm> {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: titleCtrl,
           autocorrect: true,
           decoration: InputDecoration(
             hintText: 'News Title',
@@ -114,6 +124,7 @@ class _NewsFormWidgetState extends State<NewsForm> {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: descriptionCtrl,
           autocorrect: true,
           maxLines: 5,
           textAlignVertical: TextAlignVertical.center,
@@ -138,6 +149,7 @@ class _NewsFormWidgetState extends State<NewsForm> {
         width: 300,
         padding: EdgeInsets.all(10.0),
         child: TextField(
+          controller: userIdCtrl,
           autocorrect: true,
           decoration: InputDecoration(
             hintText: 'User Id',
@@ -158,7 +170,9 @@ class _NewsFormWidgetState extends State<NewsForm> {
     return Container(
       height: 50.0,
       child: RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          addNews();
+        },
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
@@ -235,5 +249,57 @@ class _NewsFormWidgetState extends State<NewsForm> {
         height: 100.0,
       ),
     );
+  }
+
+  Future <bool> addNews() async{
+    try{
+      if(userIdCtrl.text.trim().isEmpty){
+        SnackBar snackBar = new SnackBar(
+            content: new Text("Your user Id is empty,Enter your user Id!"),
+            backgroundColor: Colors.deepOrange);
+        _formKey.currentState.showSnackBar(snackBar);
+      }else if(titleCtrl.text.trim().isEmpty){
+        SnackBar snackBar = new SnackBar(
+            content: new Text("News title is empty,Enter news title!"),
+            backgroundColor: Colors.deepOrange);
+        _formKey.currentState.showSnackBar(snackBar);
+      }else if(descriptionCtrl.text.trim().isEmpty){
+        SnackBar snackBar = new SnackBar(
+            content: new Text("News description is empty,Enter news description!"),
+            backgroundColor: Colors.deepOrange);
+        _formKey.currentState.showSnackBar(snackBar);
+      }else{
+        News new_news = News(
+          newsTitle: titleCtrl.text.trim(),
+          newsDescription: descriptionCtrl.text.trim(),
+          newsImagePath:"images/1.jpg"
+        );
+        await FireStoreService().addNews(new_news);
+
+        setState(() {
+          titleCtrl.clear();
+          descriptionCtrl.clear();
+          userIdCtrl.clear();
+        });
+
+        Fluttertoast.showToast(
+            msg: "Your news has sucessfully added!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.red,
+            fontSize: 16.0
+        );
+      }
+    }catch(e){
+      SnackBar snackBar = new SnackBar(
+          content: new Text(
+              "Something went wrong! Please try again!"),
+          backgroundColor: Colors.deepOrange);
+
+      _formKey.currentState.showSnackBar(snackBar);
+      print(e.message);
+    }
   }
 }
