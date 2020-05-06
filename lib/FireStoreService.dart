@@ -24,4 +24,8 @@ class FireStoreService {
   Future<void> addNews(News news){
       return _db.collection('news').add(news.toMap());
   }
+
+  Future<void> deleteNews(String id) {
+    return _db.collection('news').document(id).delete();
+  }
 }

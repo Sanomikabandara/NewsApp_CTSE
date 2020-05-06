@@ -1,5 +1,9 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:newsapplication/FireStoreService.dart';
+import 'package:newsapplication/HomePage.dart';
 
 import 'News.dart';
 class NewsDetails extends StatelessWidget {
@@ -26,7 +30,7 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
           SizedBox(
             height: 80.0,
           ),
-          addUpdateButtons()
+          addUpdateButtons(context)
         ],
       ),
     );
@@ -95,11 +99,12 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
     );
   }
 
-  Widget delete() {
+  Widget delete(BuildContext context) {
     return Container(
       height: 50.0,
       child: RaisedButton(
         onPressed: () {
+          deleteNews(news.id, context);
         },
         shape:
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
@@ -126,7 +131,7 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
     );
   }
 
-  Widget addUpdateButtons() {
+  Widget addUpdateButtons(BuildContext context) {
     return Container(
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,10 +143,62 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: delete()
+              child: delete(context)
             )
           ],
         )
     );
   }
+
+  void deleteNews(String id,BuildContext context) async{
+    if(await _showConfirmationDialog(context)){
+      try{
+        await FireStoreService().deleteNews(id);
+        Fluttertoast.showToast(
+            msg: "You have deleted news sucessfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.red,
+            fontSize: 16.0
+        );
+        Navigator.push(
+            context, new MaterialPageRoute(builder: (context) => HomePage()));
+      }
+      catch(e){
+        Fluttertoast.showToast(
+            msg: "Something went wrong! Please try again later!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.red,
+            fontSize: 16.0
+        );
+      }
+    }
+  }
+
+Future<bool> _showConfirmationDialog(BuildContext context) async {
+  return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => AlertDialog(
+        content: Text("Are you sure you want to delete?"),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.red,
+            child: Text("Delete"),
+            onPressed: () => Navigator.pop(context,true),
+          ),
+          FlatButton(
+            textColor: Colors.black,
+            child: Text("No"),
+            onPressed: () => Navigator.pop(context,false),
+          ),
+        ],
+      )
+  );
+}
 }
