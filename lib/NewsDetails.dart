@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newsapplication/FireStoreService.dart';
 import 'package:newsapplication/HomePage.dart';
+import 'package:newsapplication/UpdateNews.dart';
 
 import 'News.dart';
 class NewsDetails extends StatelessWidget {
@@ -68,11 +69,14 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
     );
   }
 
-  Widget update() {
+  Widget update(BuildContext context) {
     return Container(
       height: 50.0,
       child: RaisedButton(
         onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (_)=>UpdateNews(news:news),
+          ));
         },
         shape:
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
@@ -139,7 +143,7 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
           children:<Widget> [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: update()
+              child: update(context)
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),

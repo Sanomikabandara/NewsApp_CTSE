@@ -141,7 +141,8 @@ class _NewsFormWidgetState extends State<NewsForm> {
                 TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             fillColor: Colors.transparent,
           ),
-        ));
+        )
+    );
   }
 
   Widget userId() {
