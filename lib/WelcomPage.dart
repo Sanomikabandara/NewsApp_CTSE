@@ -3,13 +3,15 @@ import 'dart:ui';
 import 'LoginPage.dart';
 import 'SignupPage.dart';
 
+//Code for this was inspired by following tutorial
+//https://www.youtube.com/watch?v=u_Lyx8KJWpg&t=1s
+
 class WelcomePage extends StatefulWidget {
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +45,13 @@ class _WelcomePageState extends State<WelcomePage> {
                   endIndent: 85.0,
                   height: 20.0,
                 ),
-                SizedBox(height: 80.0,),
+                SizedBox(
+                  height: 80.0,
+                ),
                 widgetSignup1ButtonContainer(),
-                SizedBox(height: 5.0,),
+                SizedBox(
+                  height: 5.0,
+                ),
 
                 Column(children: <Widget>[
                   Row(
@@ -54,7 +60,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   Row(children: <Widget>[
                     Expanded(
                       child: new Container(
-                          margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                          margin:
+                              const EdgeInsets.only(left: 10.0, right: 20.0),
                           child: Divider(
                             color: Colors.white70,
                             height: 36,
@@ -69,7 +76,8 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                     Expanded(
                       child: new Container(
-                          margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                          margin:
+                              const EdgeInsets.only(left: 20.0, right: 10.0),
                           child: Divider(
                             color: Colors.white70,
                             height: 36,
@@ -81,10 +89,11 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ]),
 
-                SizedBox(height: 5.0,),
+                SizedBox(
+                  height: 5.0,
+                ),
                 widgetLoginButtonContainer(),
-              ]
-          ),
+              ]),
         ),
       ),
     );

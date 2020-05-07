@@ -3,12 +3,16 @@ import 'WelcomPage.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//code for this page was inspired by following tutorial
+//https://www.youtube.com/watch?v=nDVdGo3zNKI
+
 void main() => runApp(NewsApp());
 
 class NewsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.deepOrange,
       ),
@@ -50,10 +54,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   alignment: AlignmentDirectional.centerStart,
                   textAlign: TextAlign.center,
                   textStyle: GoogleFonts.courgette(
-                    color: Colors.deepPurple,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold
-                  ),
+                      color: Colors.deepPurple,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               RaisedButton(
@@ -64,7 +67,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 color: Colors.deepPurple,
                 onPressed: () {
                   Navigator.push(
-                      context, new MaterialPageRoute(builder: (context) => WelcomePage()));
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => WelcomePage()));
                 },
                 child: Text(
                   'GET STARTED',

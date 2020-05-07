@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newsapplication/FireStoreService.dart';
 import 'package:newsapplication/HomePage.dart';
-import 'package:newsapplication/UpdateNews.dart';
 import 'package:newsapplication/NewsDetails.dart';
-
 import 'News.dart';
+
+//Code for this page was inspired by following tutorials
+//https://www.youtube.com/watch?v=-blxq_RLybQ&t=928s
 
 class UpdateNews extends StatefulWidget {
   final News news;
@@ -152,12 +153,11 @@ class _UpdateNewsState extends State<UpdateNews> {
   void updateCurrentNews(BuildContext context) async {
     if (await _showConfirmationDialog(context)) {
       try {
-        News updatingNews= News(
-          id: widget.news.id,
-          newsTitle: titleCtrl.text.trim(),
-          newsDescription:descCtrl.text.trim(),
-          newsImagePath: widget.news.newsImagePath
-        );
+        News updatingNews = News(
+            id: widget.news.id,
+            newsTitle: titleCtrl.text.trim(),
+            newsDescription: descCtrl.text.trim(),
+            newsImagePath: widget.news.newsImagePath);
         await FireStoreService().updateNews(updatingNews);
         Fluttertoast.showToast(
             msg: "You have updated news sucessfully!",
@@ -168,7 +168,7 @@ class _UpdateNewsState extends State<UpdateNews> {
             textColor: Colors.red,
             fontSize: 16.0);
         Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => NewsDetails(news: updatingNews,)));
+            context, new MaterialPageRoute(builder: (context) => HomePage()));
       } catch (e) {
         Fluttertoast.showToast(
             msg: "Something went wrong! Please try again later!",

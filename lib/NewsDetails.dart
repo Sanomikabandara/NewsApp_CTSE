@@ -1,15 +1,17 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newsapplication/FireStoreService.dart';
 import 'package:newsapplication/HomePage.dart';
 import 'package:newsapplication/UpdateNews.dart';
-
 import 'News.dart';
+
+//code for this page was inspired by following tutorial
+//https://www.youtube.com/watch?v=jv5eASU9rlU
+
 class NewsDetails extends StatelessWidget {
-final News news;
-const NewsDetails({Key key, @required this.news}):super(key:key);
+  final News news;
+  const NewsDetails({Key key, @required this.news}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +42,31 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
   Widget title() {
     return Container(
         child: new Column(
-          children:<Widget> [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                news.newsTitle,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            news.newsTitle,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            news.newsDescription,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                news.newsDescription,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
+          ),
         )
-    );
+      ],
+    ));
   }
 
   Widget update(BuildContext context) {
@@ -74,12 +74,14 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
       height: 50.0,
       child: RaisedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (_)=>UpdateNews(news:news),
-          ));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => UpdateNews(news: news),
+              ));
         },
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
         child: Ink(
           decoration: BoxDecoration(
@@ -111,7 +113,7 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
           deleteNews(news.id, context);
         },
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
         child: Ink(
           decoration: BoxDecoration(
@@ -138,25 +140,18 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
   Widget addUpdateButtons(BuildContext context) {
     return Container(
         child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:<Widget> [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: update(context)
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: delete(context)
-            )
-          ],
-        )
-    );
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(padding: const EdgeInsets.all(16.0), child: update(context)),
+        Padding(padding: const EdgeInsets.all(16.0), child: delete(context))
+      ],
+    ));
   }
 
-  void deleteNews(String id,BuildContext context) async{
-    if(await _showConfirmationDialog(context)){
-      try{
+  void deleteNews(String id, BuildContext context) async {
+    if (await _showConfirmationDialog(context)) {
+      try {
         await FireStoreService().deleteNews(id);
         Fluttertoast.showToast(
             msg: "You have deleted news sucessfully!",
@@ -165,12 +160,10 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.white,
             textColor: Colors.red,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
         Navigator.push(
             context, new MaterialPageRoute(builder: (context) => HomePage()));
-      }
-      catch(e){
+      } catch (e) {
         Fluttertoast.showToast(
             msg: "Something went wrong! Please try again later!",
             toastLength: Toast.LENGTH_SHORT,
@@ -178,31 +171,29 @@ const NewsDetails({Key key, @required this.news}):super(key:key);
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.white,
             textColor: Colors.red,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
       }
     }
   }
 
-Future<bool> _showConfirmationDialog(BuildContext context) async {
-  return showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => AlertDialog(
-        content: Text("Are you sure you want to delete?"),
-        actions: <Widget>[
-          FlatButton(
-            textColor: Colors.red,
-            child: Text("Delete"),
-            onPressed: () => Navigator.pop(context,true),
-          ),
-          FlatButton(
-            textColor: Colors.black,
-            child: Text("No"),
-            onPressed: () => Navigator.pop(context,false),
-          ),
-        ],
-      )
-  );
-}
+  Future<bool> _showConfirmationDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => AlertDialog(
+              content: Text("Are you sure you want to delete?"),
+              actions: <Widget>[
+                FlatButton(
+                  textColor: Colors.red,
+                  child: Text("Delete"),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+                FlatButton(
+                  textColor: Colors.black,
+                  child: Text("No"),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+              ],
+            ));
+  }
 }

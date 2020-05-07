@@ -6,6 +6,10 @@ import 'package:newsapplication/News.dart';
 import 'package:path/path.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+//Code for this page was inspired by following tutorials
+//https://www.youtube.com/watch?v=-blxq_RLybQ&t=928s
+//https://www.youtube.com/watch?v=7uqmY6le4xk
+
 class AddNews extends StatelessWidget {
   static const String _title = 'ADD NEW NEWS';
 

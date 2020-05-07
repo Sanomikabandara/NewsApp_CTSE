@@ -9,6 +9,9 @@ import 'ListPage.dart';
 import 'AddNews.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
+//code for this page was inspired by following tutorial
+//https://www.youtube.com/watch?v=BOztHbCIn0M&t=1034s
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -50,10 +53,11 @@ class HomePage extends StatelessWidget {
                              ListTile(
                               title: Text(news.newsTitle,
                                 textAlign: TextAlign.center,
-                                style: new TextStyle(fontWeight: FontWeight.bold,color: Colors.white)
+                                style: new TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 25)
                               ),
                               subtitle: Text(news.newsDescription,
                                   textAlign: TextAlign.center,
+                                  maxLines: 1,
                                   style: new TextStyle(fontWeight: FontWeight.bold,color: Colors.white)
                              ),
                                onTap: ()=>Navigator.push(context, MaterialPageRoute(

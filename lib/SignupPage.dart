@@ -4,14 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'HomePage.dart';
 import 'LoginPage.dart';
 
+//Code for this was inspired by following tutorial
+//https://www.youtube.com/watch?v=u_Lyx8KJWpg&t=1s
+
 class SignupPage extends StatefulWidget {
   @override
   _SignupPageState createState() => _SignupPageState();
 }
+
 class _SignupPageState extends State<SignupPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey2 = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +24,7 @@ class _SignupPageState extends State<SignupPage> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 60),
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("images/logsig.jpg"),
@@ -33,15 +35,25 @@ class _SignupPageState extends State<SignupPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 imageText(),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 nameField(),
-                SizedBox(height: 5.0,),
+                SizedBox(
+                  height: 5.0,
+                ),
                 emailField(),
-                SizedBox(height: 5.0,),
+                SizedBox(
+                  height: 5.0,
+                ),
                 passwordWidget(),
-                SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 20.0,
+                ),
                 Text(
                   "ALREADY HAVE AN ACCOUNT? SIGNIN",
                   style: TextStyle(
@@ -50,15 +62,15 @@ class _SignupPageState extends State<SignupPage> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 signin(),
-              ]
-          ),
+              ]),
         ),
       ),
     );
   }
-
 
   Widget passwordWidget() {
     return Container(
@@ -67,17 +79,16 @@ class _SignupPageState extends State<SignupPage> {
         child: TextField(
           controller: passwordController,
           autocorrect: true,
+          obscureText: true,
           decoration: InputDecoration(
             hintText: 'Password',
-            prefixIcon: Icon(
-                Icons.vpn_key,
-                color: Colors.black
-            ),
-            hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            prefixIcon: Icon(Icons.vpn_key, color: Colors.black),
+            hintStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             filled: true,
             fillColor: Colors.transparent,
-          ),)
-    );
+          ),
+        ));
   }
 
   Widget emailField() {
@@ -95,10 +106,11 @@ class _SignupPageState extends State<SignupPage> {
               Icons.email,
               color: Colors.black,
             ),
-            hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            hintStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             fillColor: Colors.transparent,
-          ),)
-    );
+          ),
+        ));
   }
 
   Widget nameField() {
@@ -115,10 +127,11 @@ class _SignupPageState extends State<SignupPage> {
               Icons.people,
               color: Colors.black,
             ),
-            hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            hintStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             fillColor: Colors.transparent,
-          ),)
-    );
+          ),
+        ));
   }
 
   Widget signin() {
@@ -128,25 +141,24 @@ class _SignupPageState extends State<SignupPage> {
         onPressed: () {
           signUP();
         },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
         child: Ink(
           decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Color(0xfff4d1300), Color(0xfffff9900)],
+              gradient: LinearGradient(
+                colors: [Color(0xfff4d1300), Color(0xfffff9900)],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
               ),
-              borderRadius: BorderRadius.circular(30.0)
-          ),
+              borderRadius: BorderRadius.circular(30.0)),
           child: Container(
             constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
             alignment: Alignment.center,
             child: Text(
               "Sign Up",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white
-              ),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -162,6 +174,7 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
+
   Future<bool> signUP() async {
     try {
       if (emailController.text.trim().isEmpty) {
@@ -177,10 +190,11 @@ class _SignupPageState extends State<SignupPage> {
       } else {
         AuthResult newUser = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim());
+                email: emailController.text.trim(),
+                password: passwordController.text.trim());
         SnackBar snackBar = new SnackBar(
-            content: new Text("Your have successfully signed up!Please login to continue!"),
+            content: new Text(
+                "Your have successfully signed up!Please login to continue!"),
             backgroundColor: Colors.deepOrange);
         _scaffoldKey2.currentState.showSnackBar(snackBar);
         Navigator.push(
@@ -188,8 +202,7 @@ class _SignupPageState extends State<SignupPage> {
       }
     } catch (e) {
       SnackBar snackBar = new SnackBar(
-          content: new Text(
-              "Something went wrong!Please try again later!"),
+          content: new Text("Something went wrong!Please try again later!"),
           backgroundColor: Colors.deepOrange);
 
       _scaffoldKey2.currentState.showSnackBar(snackBar);

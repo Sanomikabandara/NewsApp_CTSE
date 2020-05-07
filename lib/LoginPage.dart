@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+//Code for this was inspired by following tutorial
+//https://www.youtube.com/watch?v=u_Lyx8KJWpg&t=1s
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -72,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
         child: TextField(
           controller: passwordController,
           autocorrect: true,
+          obscureText: true,
           decoration: InputDecoration(
             hintText: 'Password',
             prefixIcon: Icon(Icons.vpn_key, color: Colors.black),
