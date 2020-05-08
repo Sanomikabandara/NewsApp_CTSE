@@ -1,3 +1,7 @@
+/***************************************
+    Developed by Gunarathna PMSSB IT1618800
+ ****************************************/
+
 import 'package:flutter/material.dart';
 import 'WelcomPage.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -35,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
         width: double.maxFinite,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/press_1.gif'),
+            image: AssetImage('images/press_1.gif'),//set up animation
             fit: BoxFit.cover,
           ),
         ),
@@ -69,6 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
+                        //direct to home page
                           builder: (context) => WelcomePage()));
                 },
                 child: Text(

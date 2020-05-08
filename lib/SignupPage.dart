@@ -1,8 +1,13 @@
+/***************************************
+    Developed by Gunarathna PMSSB IT1618800
+ ****************************************/
+
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'HomePage.dart';
 import 'LoginPage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 //Code for this was inspired by following tutorial
 //https://www.youtube.com/watch?v=u_Lyx8KJWpg&t=1s
@@ -72,6 +77,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
+  //password text field
   Widget passwordWidget() {
     return Container(
         width: 300,
@@ -91,6 +97,7 @@ class _SignupPageState extends State<SignupPage> {
         ));
   }
 
+  //email text field
   Widget emailField() {
     return Container(
         width: 300,
@@ -113,6 +120,7 @@ class _SignupPageState extends State<SignupPage> {
         ));
   }
 
+  //name text field
   Widget nameField() {
     return Container(
         width: 300,
@@ -134,6 +142,7 @@ class _SignupPageState extends State<SignupPage> {
         ));
   }
 
+  //sign in button
   Widget signin() {
     return Container(
       height: 50.0,
@@ -166,6 +175,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
+  //logo
   Widget imageText() {
     return Container(
       child: Image(
@@ -175,8 +185,10 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
+  //create user in firebase authentication using sign in method as email/password
   Future<bool> signUP() async {
     try {
+      //validate fields
       if (emailController.text.trim().isEmpty) {
         SnackBar snackBar = new SnackBar(
             content: new Text("Your email is empty,Enter your email!"),
@@ -188,15 +200,20 @@ class _SignupPageState extends State<SignupPage> {
             backgroundColor: Colors.deepOrange);
         _scaffoldKey2.currentState.showSnackBar(snackBar);
       } else {
+        //create user
         AuthResult newUser = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: emailController.text.trim(),
                 password: passwordController.text.trim());
-        SnackBar snackBar = new SnackBar(
-            content: new Text(
-                "Your have successfully signed up!Please login to continue!"),
-            backgroundColor: Colors.deepOrange);
-        _scaffoldKey2.currentState.showSnackBar(snackBar);
+        Fluttertoast.showToast(
+            msg:
+                "Your news has sucessfully signed up, Please login to continue!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.white,
+            textColor: Colors.red,
+            fontSize: 16.0);
         Navigator.push(
             context, new MaterialPageRoute(builder: (context) => LoginPage()));
       }

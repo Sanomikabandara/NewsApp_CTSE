@@ -1,3 +1,7 @@
+/***************************************
+    Developed by Nibraz M IT16165694
+ ****************************************/
+
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'LoginPage.dart';
@@ -21,6 +25,7 @@ class _WelcomePageState extends State<WelcomePage> {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
+              //adding background image
               image: AssetImage("images/welcome.jpg"),
               fit: BoxFit.cover,
             ),
@@ -58,6 +63,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     children: <Widget>[],
                   ),
                   Row(children: <Widget>[
+                    //creating a divider between buttons
                     Expanded(
                       child: new Container(
                           margin:
@@ -100,6 +106,7 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   widgetLoginButtonContainer() {
+    //creating the Login button
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -126,6 +133,7 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   widgetSignup1ButtonContainer() {
+    //creating the Signup button
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -152,6 +160,7 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Widget imageText() {
+    //displaying the logo
     return Container(
       child: Image(
         image: AssetImage("images/l1.png"),

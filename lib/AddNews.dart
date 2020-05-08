@@ -1,3 +1,7 @@
+/***************************************
+ Developed by Gunarathna PMSSB IT1618800
+ ****************************************/
+
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -43,15 +47,16 @@ class _NewsFormWidgetState extends State<NewsForm> {
   File _image;
   final _formKey = GlobalKey<ScaffoldState>();
 
+//select image from gallery
   Future selectImageFromGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
     setState(() {
       _image = image;
       print('Image Path $_image');
     });
   }
 
+//create controller for text fields and image path
   TextEditingController titleCtrl = new TextEditingController();
   TextEditingController descriptionCtrl = new TextEditingController();
   TextEditingController imagepathCtrl = new TextEditingController();
@@ -123,6 +128,7 @@ class _NewsFormWidgetState extends State<NewsForm> {
         ));
   }
 
+  //news description text field
   Widget description() {
     return Container(
         width: 300,
@@ -145,10 +151,10 @@ class _NewsFormWidgetState extends State<NewsForm> {
                 TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             fillColor: Colors.transparent,
           ),
-        )
-    );
+        ));
   }
 
+  //user id text feild
   Widget userId() {
     return Container(
         width: 300,
@@ -171,6 +177,7 @@ class _NewsFormWidgetState extends State<NewsForm> {
         ));
   }
 
+//add news button
   Widget addnews() {
     return Container(
       height: 50.0,
@@ -203,6 +210,7 @@ class _NewsFormWidgetState extends State<NewsForm> {
     );
   }
 
+  //image picker
   Widget imageAdd() {
     return Container(
       child: Row(
@@ -256,31 +264,35 @@ class _NewsFormWidgetState extends State<NewsForm> {
     );
   }
 
-  Future <bool> addNews() async{
-    try{
-      if(userIdCtrl.text.trim().isEmpty){
+  //add news to database
+  Future<bool> addNews() async {
+    try {
+      //validating empty fields
+      if (userIdCtrl.text.trim().isEmpty) {
         SnackBar snackBar = new SnackBar(
             content: new Text("Your user Id is empty,Enter your user Id!"),
             backgroundColor: Colors.deepOrange);
         _formKey.currentState.showSnackBar(snackBar);
-      }else if(titleCtrl.text.trim().isEmpty){
+      } else if (titleCtrl.text.trim().isEmpty) {
         SnackBar snackBar = new SnackBar(
             content: new Text("News title is empty,Enter news title!"),
             backgroundColor: Colors.deepOrange);
         _formKey.currentState.showSnackBar(snackBar);
-      }else if(descriptionCtrl.text.trim().isEmpty){
+      } else if (descriptionCtrl.text.trim().isEmpty) {
         SnackBar snackBar = new SnackBar(
-            content: new Text("News description is empty,Enter news description!"),
+            content:
+                new Text("News description is empty,Enter news description!"),
             backgroundColor: Colors.deepOrange);
         _formKey.currentState.showSnackBar(snackBar);
-      }else{
+      } else {
         News new_news = News(
-          newsTitle: titleCtrl.text.trim(),
-          newsDescription: descriptionCtrl.text.trim(),
-          newsImagePath:"images/1.jpg"
-        );
+            newsTitle: titleCtrl.text.trim(),
+            newsDescription: descriptionCtrl.text.trim(),
+            newsImagePath: "images/news4.jpg");
+        //invoke add news method
         await FireStoreService().addNews(new_news);
 
+        //clear text fields
         setState(() {
           titleCtrl.clear();
           descriptionCtrl.clear();
@@ -294,13 +306,11 @@ class _NewsFormWidgetState extends State<NewsForm> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.white,
             textColor: Colors.red,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
       }
-    }catch(e){
+    } catch (e) {
       SnackBar snackBar = new SnackBar(
-          content: new Text(
-              "Something went wrong! Please try again!"),
+          content: new Text("Something went wrong! Please try again!"),
           backgroundColor: Colors.deepOrange);
 
       _formKey.currentState.showSnackBar(snackBar);

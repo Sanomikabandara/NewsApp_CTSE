@@ -1,3 +1,7 @@
+/***************************************
+    Developed by Nibraz M IT16165694
+ ****************************************/
+
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'HomePage.dart';
@@ -69,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget passwordWidget() {
+    //text field for password
     return Container(
         width: 300,
         padding: EdgeInsets.all(10.0),
@@ -80,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
             hintText: 'Password',
             prefixIcon: Icon(Icons.vpn_key, color: Colors.black),
             hintStyle:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             filled: true,
             fillColor: Colors.transparent,
           ),
@@ -88,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget emailField() {
+    //text field for email
     return Container(
         width: 300,
         padding: EdgeInsets.all(10.0),
@@ -103,13 +109,14 @@ class _LoginPageState extends State<LoginPage> {
               color: Colors.black,
             ),
             hintStyle:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             fillColor: Colors.transparent,
           ),
         ));
   }
 
   Widget facebookButton() {
+    //creating facebook login button
     return Container(
         width: 300,
         height: 45.0,
@@ -137,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
   gotoSecondActivity(BuildContext context) {}
 
   Widget signin() {
+    //creating signin button
     return Container(
       height: 50.0,
       child: RaisedButton(
@@ -144,10 +152,11 @@ class _LoginPageState extends State<LoginPage> {
           login();
         },
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
         child: Ink(
           decoration: BoxDecoration(
+            //providing gradient effect for the button
               gradient: LinearGradient(
                 colors: [Color(0xfff4d1300), Color(0xffff9900)],
                 begin: Alignment.centerLeft,
@@ -169,6 +178,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget imageText() {
+    //displaying the logo
     return Container(
       child: Image(
         image: AssetImage("images/l2.png"),
@@ -178,27 +188,31 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<bool> login() async {
+    //login authentication
     try {
       if (emailController.text.trim().isEmpty) {
         SnackBar snackBar = new SnackBar(
+          //displaying error message
             content: new Text("Your email is empty,Enter your email!"),
             backgroundColor: Colors.deepOrange);
         _scaffoldKey.currentState.showSnackBar(snackBar);
       } else if (passwordController.text.trim().isEmpty) {
         SnackBar snackBar = new SnackBar(
+          //displaying error message
             content: new Text("Your password is empty,Enter your password"),
             backgroundColor: Colors.deepOrange);
         _scaffoldKey.currentState.showSnackBar(snackBar);
       } else {
         AuthResult newUser = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim());
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
         Navigator.push(
             context, new MaterialPageRoute(builder: (context) => HomePage()));
       }
     } catch (e) {
       SnackBar snackBar = new SnackBar(
+        //displaying error message
           content: new Text(
               "Your email or password is incorrect! Please try again!"),
           backgroundColor: Colors.deepOrange);

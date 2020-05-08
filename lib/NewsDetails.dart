@@ -1,3 +1,7 @@
+/***************************************
+    Developed by Gunarathna PMSSB IT1618800
+ ****************************************/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,6 +15,8 @@ import 'News.dart';
 
 class NewsDetails extends StatelessWidget {
   final News news;
+
+  //accept news object via constructor
   const NewsDetails({Key key, @required this.news}) : super(key: key);
 
   @override
@@ -31,7 +37,7 @@ class NewsDetails extends StatelessWidget {
           ),
           title(),
           SizedBox(
-            height: 80.0,
+            height: 25.0,
           ),
           addUpdateButtons(context)
         ],
@@ -39,6 +45,7 @@ class NewsDetails extends StatelessWidget {
     );
   }
 
+  //news title and description
   Widget title() {
     return Container(
         child: new Column(
@@ -47,6 +54,7 @@ class NewsDetails extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             news.newsTitle,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 30.0,
@@ -105,6 +113,7 @@ class NewsDetails extends StatelessWidget {
     );
   }
 
+  //delete button
   Widget delete(BuildContext context) {
     return Container(
       height: 50.0,
@@ -149,6 +158,7 @@ class NewsDetails extends StatelessWidget {
     ));
   }
 
+  //delete news from database
   void deleteNews(String id, BuildContext context) async {
     if (await _showConfirmationDialog(context)) {
       try {
@@ -176,6 +186,7 @@ class NewsDetails extends StatelessWidget {
     }
   }
 
+  //confirmation message for deletion
   Future<bool> _showConfirmationDialog(BuildContext context) async {
     return showDialog(
         context: context,

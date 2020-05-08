@@ -1,8 +1,15 @@
+/***************************************
+    Developed by Nibraz M IT16165694
+ ****************************************/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart';
+
+//Code for this was inspired by following tutorial
+//Alert Dialog: Create Custom Alert Dialog | Flutter Tutorial for Beginners, available at: https://www.youtube.com/watch?v=YCKc89d0oo8
 
 
 //URLs used to link to social medias on button clicks
@@ -18,6 +25,9 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
 
   //function to launch feedback email on button click
+  //reference
+  //Exploring Webviews and the Url Launcher Plugin in Dart's Flutter Framework, available at: https://www.youtube.com/watch?v=sK-8k1Dq1xM&t=297s
+
   void launchEmail(String emailID) async{
     var url = "mailto: $emailID?subject= CAPPIC Feedback Email";
     if(await canLaunch(url)) {
@@ -57,7 +67,9 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget feedbackButton() {
-    //Feedback email
+    //sending feedback emails
+    //references
+    //Flutter Tutorials | URL Launcher Package | Dial Phone-Numbers | Send E-Mails | Dart, available at: https://www.youtube.com/watch?v=OfhQsWfRxRE&t=543s
     return Container(
         width: 200,
         height: 70.0,
@@ -271,6 +283,9 @@ class CustomDialog1 extends StatelessWidget {
 
 class CustomDialog2 extends StatelessWidget {
   //custom made dialog box to display more about us information
+  //reference
+  //How to make Custom Dialog in flutter, available at: https://www.youtube.com/watch?v=IYrX5a-2jL8
+
   final String title, description, buttonText;
   final Image image;
 
@@ -353,6 +368,9 @@ class CustomDialog2 extends StatelessWidget {
 
 class CustomDialog3 extends StatelessWidget {
   //custom made dialog box to display the button links to social media
+  //references
+  //url_launcher 5.4.5 available at: https://pub.dev/packages/url_launcher
+
   final String title, description, buttonText;
   final Image image;
 
